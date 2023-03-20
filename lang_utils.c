@@ -5,7 +5,7 @@
 #include "langs.h"
 
 int init_langs_strings(char** dest) {
-	for(int i = 0; i < sizeof(langs) / sizeof(langs[0]); i++){
+	for(int i = 0; i < sizeof(langs) / sizeof(Lang); i++){
 		if(langs[i].string == NULL) {
 			printf("%s\n", "bad thing");
 			return 0;
@@ -17,7 +17,7 @@ int init_langs_strings(char** dest) {
 }
 
 char* get_lang_code(char* string) {
-	char* out = malloc(8);
+	char* out = malloc(9);
 	for(int i = 0; i < sizeof(langs) / sizeof(Lang); i++){
 		if(langs[i].string == NULL) {
 			printf("bad thing\n");

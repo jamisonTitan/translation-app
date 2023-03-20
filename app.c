@@ -1,22 +1,26 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "api.h"
 #include "langs.h"
 #include "lang_utils.h"
 
-char source_lang[8] = "en";
-char target_lang[8] = "es";
+char source_lang[32] = "English";
+char target_lang[32] = "Spanish";
 char* langs_strings[110];
 
 static void source_lang_handler(GtkDropDown *widget, gpointer data) {
-	const gchar *selected_str = gtk_string_object_get_string(GTK_STRING_OBJECT(gtk_drop_down_get_selected_item(widget)));
-	snprintf(source_lang, sizeof(selected_str), "%s", selected_str);
+	const guint selected_str_i = gtk_drop_down_get_selected(widget);
+	char* selected_str = langs_strings[selected_str_i];
+	snprintf(source_lang, strlen(selected_str), "%s", selected_str);
+	printf("d %ld s %s s %s \n", strlen(selected_str),source_lang, selected_str);
 }
 
 static void target_lang_handler(GtkDropDown *widget, gpointer data) {
 	const gchar *selected_str = gtk_string_object_get_string(GTK_STRING_OBJECT(gtk_drop_down_get_selected_item(widget)));
-	snprintf(target_lang, sizeof(selected_str), "%s", selected_str);
+	snprintf(target_lang, strlen(selected_str), "%s", selected_str);
+	printf("TARGET: %s\n", target_lang);
 }
 
 static void trans_handler(GtkWidget *widget, gpointer data) {
@@ -24,12 +28,10 @@ static void trans_handler(GtkWidget *widget, gpointer data) {
 	char user_in_as_string[sizeof(user_in)];
 	snprintf(user_in_as_string, sizeof(user_in), "%s", user_in);
 
-	printf("translated from %s to %s: %s \n", source_lang, target_lang, trans(user_in_as_string, "en", "es"));
+	printf("translated from %s to %s: %s \n", source_lang, get_lang_code(target_lang), trans(user_in_as_string, get_lang_code(source_lang), get_lang_code(target_lang)));
 }
 
 static void app_activate(GApplication *app) {
-	//const char** langs_strings_cpy;
-
 	GtkWidget *win;
 	GtkWidget *main_box;
 	GtkWidget *text_in_box;

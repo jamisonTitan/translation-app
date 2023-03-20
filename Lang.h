@@ -2,8 +2,8 @@
 #define LANG_H
 
 typedef struct Lang {
-	char* string;
 	char* code;
+	char* string;
 } Lang;
 
 #endif
