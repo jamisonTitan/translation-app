@@ -1,4 +1,4 @@
-OBJS = app.o api.o
+OBJS = app.o api.o langs.o lang_utils.o
 PROG = app
 
 %.o: %.c
